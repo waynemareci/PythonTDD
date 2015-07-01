@@ -17,7 +17,6 @@ class FunctionalTest(StaticLiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls):
-        for arg in sys.argv:
             if cls.server_url == cls.live_server_url:
                 super().tearDownClass()
 
