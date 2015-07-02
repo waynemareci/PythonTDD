@@ -18,7 +18,10 @@ class FunctionalTest(StaticLiveServerTestCase):
     @classmethod
     def tearDownClass(cls):
             if cls.server_url == cls.live_server_url:
-                super().tearDownClass()
+             #   if hasattr(cls,'server_thread'):
+             #  cls.server_thread.httpd.ignore_errors = True
+             #  webdriver.Firefox().quit()
+                super(StaticLiveServerTestCase,cls).tearDownClass()
 
     def setUp(self):
         self.browser = webdriver.Firefox()
