@@ -18,11 +18,10 @@ def view_list(request,list_id):
     return render(request, 'list.html',{'list':list_,"form":form})
     
 def new_list(request):
-    pass
-    #form = ItemForm(data=request.POST)
-    #if form.is_valid():
-    #    list_ = List.objects.create()
-    #    form.save(for_list=list_)
-    #    return redirect(list_)
-    #else:
-    #    return render(request,'home.html',{"form":form})
+    form = ItemForm(data=request.POST)
+    if form.is_valid():
+        list_ = List.objects.create()
+        form.save(for_list=list_)
+        return redirect(list_)
+    else:
+        return render(request,'home.html',{"form":form})
