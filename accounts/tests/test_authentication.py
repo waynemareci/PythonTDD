@@ -1,3 +1,4 @@
+import logging
 from unittest.mock import patch
 from django.test import TestCase
 from django.conf import settings
@@ -13,6 +14,19 @@ class AuthenticateTest(TestCase):
         user = User(email='other@user.com')
         user.username = 'otheruser'
         user.save()
+
+    def test_logs_non_okay_responses_from_persona(self,mock_post):
+        response_json = {'status':'not okay','reason':'eg, audience mismatch'}
+        mock_post.return_value.ok = True
+        mock_post.return_value.json.return_value = response_json
+
+        logger = logging.getLogger('accounts.authentication')
+        with patch.object(logger,"warning") as mock_log_warning:
+            self.backend.authenticate('an assertion')
+        
+        mock_log_warning.assert_called_once_with(
+            'Persona says no. Json was: {}'.format(response_json)
+        )
 
     def test_sends_assertion_to_mozilla_with_domain(self,mock_post):
         self.backend.authenticate('an assertion')

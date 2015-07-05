@@ -9,7 +9,7 @@ def _get_manage_dot_py(host):
     )
 
 def reset_database():
-    run('{manage.py} flush --noinput'.format(
+    run('{manage_py} flush --noinput'.format(
         manage_py=_get_manage_dot_py(env.host)
     ))
 
@@ -19,3 +19,7 @@ def create_session_on_server(email):
         email=email,
     ))
     print(session_key)
+
+    f1=open('./session_key_file', 'w+')
+    f1.write(session_key)
+    return session_key

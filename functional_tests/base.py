@@ -58,3 +58,4 @@ class FunctionalTest(StaticLiveServerTestCase):
                 element_id,self.browser.find_element_by_tag_name('body').text
             )
         )
+
